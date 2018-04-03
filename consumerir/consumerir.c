@@ -29,7 +29,7 @@
 #include <sys/ioctl.h>
 #include <sys/times.h>
 #include <dlfcn.h>
-#include <cutils/log.h>
+#include <log/log.h>
 #include <cutils/properties.h>
 #include <hardware/hardware.h>
 #include <hardware/hwcomposer_defs.h>

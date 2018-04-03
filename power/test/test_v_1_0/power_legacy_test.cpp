@@ -12,7 +12,7 @@
 #include <errno.h>
 #include <dlfcn.h>
 #include <unistd.h>
-#include <cutils/log.h>
+#include <log/log.h>
 #include <cutils/properties.h>
 
 #include <sys/types.h>

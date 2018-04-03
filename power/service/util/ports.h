@@ -26,7 +26,6 @@
 #else
 #define LOG_TAG "powerc"
 #endif
-/*#include <cutils/log.h>*/
 #include <log/log.h>
 
 #ifdef __cplusplus
