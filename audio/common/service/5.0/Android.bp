@@ -65,36 +65,36 @@ cc_library_shared {
 // Service
 //
 
-cc_binary {
-    name: "android.hardware.audio@5.0-service-mediatek",
-    init_rc: ["android.hardware.audio@5.0-service-mediatek.rc"],
-    owner: "mtk",
-    relative_install_path: "hw",
-    proprietary: true,
-    srcs: ["service.cpp"],
-
-    cflags: [
-        "-Wall",
-        "-Werror",
-    ],
-    shared_libs: [
-        "libcutils",
-        "libbinder",
-        "libhidlbase",
-        "liblog",
-        "libutils",
-        "libhardware",
-        "android.hardware.audio@5.0",
-        "android.hardware.audio.common@5.0",
-        "android.hardware.audio.effect@5.0",
-        "android.hardware.bluetooth.a2dp@1.0",
-        "android.hardware.bluetooth.audio@2.0",
-        "android.hardware.soundtrigger@2.2",
-        "android.hardware.broadcastradio@1.0",
-        "android.hardware.broadcastradio@1.1",
-        "vendor.mediatek.hardware.audio@5.1",
-    ],
-
-    include_dirs: ["vendor/mediatek/opensource/hardware/audio/common/include"],
-
-}
+//cc_binary {
+//    name: "android.hardware.audio@5.0-service-mediatek",
+//    init_rc: ["android.hardware.audio@5.0-service-mediatek.rc"],
+//    owner: "mtk",
+//    relative_install_path: "hw",
+//    proprietary: true,
+//    srcs: ["service.cpp"],
+//
+//    cflags: [
+//        "-Wall",
+//        "-Werror",
+//    ],
+//    shared_libs: [
+//        "libcutils",
+//        "libbinder",
+//        "libhidlbase",
+//        "liblog",
+//        "libutils",
+//        "libhardware",
+//        "android.hardware.audio@5.0",
+//        "android.hardware.audio.common@5.0",
+//        "android.hardware.audio.effect@5.0",
+//        "android.hardware.bluetooth.a2dp@1.0",
+//        "android.hardware.bluetooth.audio@2.0",
+//        "android.hardware.soundtrigger@2.2",
+//        "android.hardware.broadcastradio@1.0",
+//        "android.hardware.broadcastradio@1.1",
+//        "vendor.mediatek.hardware.audio@5.1",
+//    ],
+//
+//    include_dirs: ["vendor/mediatek/opensource/hardware/audio/common/include"],
+//
+//}
