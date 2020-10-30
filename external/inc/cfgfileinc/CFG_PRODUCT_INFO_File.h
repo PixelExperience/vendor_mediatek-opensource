@@ -1,0 +1,195 @@
+/*
+ * Copyright (C) 2016 The Android Open Source Project
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+/*******************************************************************************
+ *
+ * Filename:
+ * ---------
+ *   CFG_PRODUCT_INFO_File.h
+ *
+ * Project:
+ * --------
+ *   YuSu
+ *
+ * Description:
+ * ------------
+ *    header file of main function
+ *
+ * Author:
+ * -------
+ *   Yuchi Xu(MTK81073)
+ *
+ *------------------------------------------------------------------------------
+ *
+ *******************************************************************************/
+
+
+
+#ifndef _CFG_PRODUCT_INFO_FILE_H
+#define _CFG_PRODUCT_INFO_FILE_H
+
+
+// the record structure define of PRODUCT_INFO nvram file
+typedef struct
+{
+    unsigned char imei[8];
+    unsigned char svn;
+    unsigned char pad;
+} nvram_ef_imei_imeisv_struct;
+
+typedef struct
+{
+    unsigned char BTAddr[6];
+    unsigned char WifiAddr[6];
+    unsigned char ADBSeriaNo[20];
+    unsigned char revered[32];
+} s_target_info_record;
+
+typedef struct _s_ate_gsm_flag
+{
+    unsigned char        ate_gsm_flag[4];
+} s_ate_gsm_flag;         // 4Bytes
+
+typedef struct _s_ate_tdscdma_flag
+{
+    unsigned char        ate_tdscdma_flag[2];
+
+} s_ate_tdscdma_flag;    // 2Bytes
+
+typedef struct _s_ate_wcdma_flag
+{
+    unsigned char        ate_wcdma_flag[2];
+} s_ate_wcdma_flag;      // 2Bytes
+
+typedef struct _s_ate_lte_flag
+{
+    unsigned char        ate_lte_flag[2];
+
+} s_ate_lte_flag;    // 2Bytes
+
+typedef struct _s_ate_cdma_flag
+{
+    unsigned char        ate_cdma_flag[2];
+
+} s_ate_cdma_flag;      // 2Bytes
+
+typedef struct _s_ate_nsft_flag
+{
+    unsigned char        ate_nsft_flag[2];
+} s_ate_nsft_flag;      // 2Bytes
+
+typedef struct _s_ate_wireless_flag
+{
+    unsigned char        ate_wireless_flag[2];
+} s_ate_wireless_flag;  // 2Bytes
+
+typedef struct s_ate_other_flag
+{
+    unsigned char        ate_other_flag[1];
+} s_ate_other_flag;     // 1Bytes
+
+typedef struct _s_ate_flag
+{
+    unsigned char                    sw_index;
+    unsigned char                    md_index;
+    s_ate_gsm_flag        	gsm_flag;
+    s_ate_tdscdma_flag  	tdscdma_flag;
+    s_ate_wcdma_flag     	wcdma_flag;
+    s_ate_lte_flag    	    lte_flag;
+    s_ate_cdma_flag         cdma_flag;
+    s_ate_other_flag      	other_flag;
+    s_ate_nsft_flag      	nsft_flag;
+    s_ate_wireless_flag 	wireless_flag;
+    unsigned char                    reserved[3];
+} s_ate_flag;       // 22Bytes
+
+
+/* 
+* ****************************************
+*                 WCN_ATE_Tool
+* ****************************************
+*/
+typedef struct _s_wcn_ate_flag
+{
+    unsigned char        wcn_ate_flag[4];
+} s_wcn_ate_flag;   // 4Bytes
+
+/*
+* ****************************************
+*                 HW_Test_Tool
+* ****************************************
+*/
+typedef struct _s_hw_test_flag
+{
+    unsigned char        hw_test_flag[20];
+	} s_hw_test_flag;               // 20Bytes
+/*
+* ****************************************
+*            ATA_Tool & Factory Mode
+* ****************************************
+*/
+typedef struct _s_factory_mode_flag
+{
+    unsigned char	    reserved[20];
+} s_factory_mode_flag;	// 20Bytes
+
+
+typedef struct _s_mtk_test_flag
+{
+    s_ate_flag			ate_flag[5];	// 110Bytes
+    s_wcn_ate_flag		wcn_ate_flag;	// 4Bytes
+    s_hw_test_flag		hw_test_flag;	// 20Bytes
+    s_factory_mode_flag	factory_mode_flag; // 20Bytes
+    unsigned char	            reserved[16];
+} s_mtk_test_flag;	// 170Bytes
+
+
+typedef struct
+{
+    unsigned char  boot_mode;   //0:normal, 1: meta, etc
+    unsigned char  com_type;    //0:unknow com, 1:uart, 2:usb
+    unsigned char  com_id;      // 0:enable mobile log meta mode, enable adb(composite device)
+                                // 1:enable mobile log meta mode, disable adb(single device)
+                                // 2:disable mobile log meta mode, enable adb(composite device)
+                                // 3:disable mobile log meta mode, disable adb(single device)
+    unsigned char meta_mode_log;  //Enable or disable meta mode log for preloader use
+} s_mtk_boot_mode_flag;
+
+typedef struct
+{
+    unsigned char pattern[8];  //8B fixed pattern ¡§FACTORY!¡¨
+    s_mtk_boot_mode_flag        mtk_boot_mode_flag; //4B
+    unsigned char atm_flag[8]; //8B for ATM mode
+    unsigned char reserved[128-8-4-8];
+}s_mtk_reserved;
+
+typedef struct
+{
+    unsigned char               barcode[64];    // 64B
+    nvram_ef_imei_imeisv_struct IMEI[4];        // 40B
+    s_target_info_record        target_info;    // 64B
+    s_mtk_test_flag             mtk_test_flag;  // 170B
+    s_mtk_reserved             mtk_reserved_flag; //128B
+    unsigned char reserved[1024-170-64-40-64-128];
+}PRODUCT_INFO;
+
+
+
+//the record size and number of PRODUCT_INFO nvram file
+#define CFG_FILE_PRODUCT_INFO_SIZE    1024
+#define CFG_FILE_PRODUCT_INFO_TOTAL   1
+#endif /* _CFG_PRODUCT_INFO_FILE_H */
+
