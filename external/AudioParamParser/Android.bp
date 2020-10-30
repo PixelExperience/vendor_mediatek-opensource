@@ -1,0 +1,77 @@
+
+AUD_PARAM_PARSER_COMMON_CFLAGS = [
+    "-Wno-date-time",
+    "-Wno-unused-parameter",
+    "-Wno-unused-function",
+    "-DCUST_XML_DIR=\"$(CUST_XML_DIR)\"",
+]
+
+AUD_PARAM_PARSER_COMMON_SRC_FILES = [
+    "AudioCategory.c",
+    "AudioParam.c",
+    "AudioParamFieldInfo.c",
+    "AudioParamParser.c",
+    "AudioParamTreeView.c",
+    "AudioParamUnit.c",
+    "AudioType.c",
+    "AudioUtils.c",
+    "UnitTest.c",
+    "guicon.cpp",
+]
+
+AUD_PARAM_PARSER_COMMON_C_INCLUDES = [
+    "external/libxml2/include",
+    "external/icu/libandroidicu/include",
+    "vendor/mediatek/opensource/external/AudioParamParser/include",
+]
+
+AUD_PARAM_PARSER_COMMON_SHARED_LIBRARIES = [
+    "libutils",
+    "libcutils",
+    "liblog",
+    "libbinder",
+    "libxml2",
+]
+
+cc_library_shared {
+    name: "libaudio_param_parser-sys",
+
+    cflags: AUD_PARAM_PARSER_COMMON_CFLAGS + ["-DSYS_IMPL"],
+
+    srcs: AUD_PARAM_PARSER_COMMON_SRC_FILES,
+    include_dirs: AUD_PARAM_PARSER_COMMON_C_INCLUDES,
+
+    shared_libs: AUD_PARAM_PARSER_COMMON_SHARED_LIBRARIES + [
+        "libaudioclient",
+        "libhidlbase",
+        "android.hardware.audio@5.0",
+        "vendor.mediatek.hardware.audio@5.1",
+    ],
+
+    header_libs: ["libutils_headers"],
+    proprietary: false,
+    owner: "mtk",
+    compile_multilib: "both",
+}
+
+cc_library_shared {
+    name: "libaudio_param_parser-vnd",
+
+    cflags: AUD_PARAM_PARSER_COMMON_CFLAGS,
+
+    srcs: AUD_PARAM_PARSER_COMMON_SRC_FILES,
+    include_dirs: AUD_PARAM_PARSER_COMMON_C_INCLUDES + [
+        "vendor/mediatek/opensource/external/audiocustparam",
+        "vendor/mediatek/opensource/hardware/audio/common/include",
+        "vendor/mediatek/opensource/external/audio_utils/common_headers/cgen/cfgfileinc",
+    ],
+    shared_libs: AUD_PARAM_PARSER_COMMON_SHARED_LIBRARIES + [
+        "libaudiocustparam_vendor",
+        "libaudioprimarydevicehalifclient",
+    ],
+
+    header_libs: ["libutils_headers"],
+    proprietary: true,
+    owner: "mtk",
+    compile_multilib: "both",
+}

@@ -1,0 +1,30 @@
+//############################################################################################################## Vendor
+cc_library_shared {
+    name: "libaudiocustparam_vendor",
+
+    include_dirs: [
+        "vendor/mediatek/opensource/external/nvram/libnvram",
+        "vendor/mediatek/opensource/hal/audioflinger/audio",
+        "vendor/mediatek/opensource/external/audio_utils/common_headers/cgen/cfgfileinc",
+        "vendor/mediatek/opensource/external/audio_utils/common_headers/customization",
+    ] + ["vendor/mediatek/opensource/external/AudioParamParser"] + ["vendor/mediatek/opensource/external/AudioParamParser/include"] + ["external/libxml2/include"] + ["external/icu/libandroidicu/include"], // MTK Audio Tuning Tool Version
+    srcs: ["AudioCustParam.cpp"],
+
+    shared_libs: [
+        "libcutils",
+        "liblog",
+        "libutils",
+        "libnvram",
+        "libcustom_nvram",
+    ],
+
+    cflags: ["-DMTK_AUDIO_HD_REC_SUPPORT"] + ["-DMTK_DUAL_MIC_SUPPORT"] + ["-DMTK_WB_SPEECH_SUPPORT"] + ["-DMTK_AUDIO_HIERARCHICAL_PARAM_SUPPORT"] + ["-DMTK_AUDIO_TUNING_TOOL_V2_PHASE"],
+
+    proprietary: true,
+    owner: "mtk",
+    arch: {
+        arm: {
+            instruction_set: "arm",
+        },
+    },
+}

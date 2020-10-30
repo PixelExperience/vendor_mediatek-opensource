@@ -1,0 +1,38 @@
+//############################################################################################################## Vendor
+cc_library_shared {
+    name: "libspeechparser_vendor",
+    include_dirs: [
+        "external/libxml2/include",
+        "external/icu/libandroidicu/include",
+        "vendor/mediatek/opensource/external/AudioParamParser/include",
+        "vendor/mediatek/opensource/external/aurisys/interface",
+        "vendor/mediatek/opensource/external/AudioParamParser",
+        "vendor/mediatek/opensource/hardware/audio/common/V3/include",
+        "frameworks/av/media/libmedia",
+        "frameworks/av/include",
+        "hardware/libhardware/include",
+    ],
+
+    srcs: ["SpeechParser.cpp"],
+
+    shared_libs: [
+        "libcutils",
+        "liblog",
+        "libutils",
+        "libaudioutils",
+        "libmedia_helper",
+    ],
+
+    header_libs: ["libaudioclient_headers"],
+    proprietary: true,
+    owner: "mtk",
+
+    compile_multilib: "both",
+    arch: {
+        arm: {
+            instruction_set: "arm",
+        },
+    },
+
+    export_include_dirs: ["."],
+}

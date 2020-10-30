@@ -1,0 +1,17 @@
+cc_prebuilt_library_shared {
+    name: "libMtkSpeechEnh",
+    proprietary: true,
+    owner: "mtk",
+
+    arch: {
+        arm: {
+            srcs: ["libMtkSpeechEnh.so"],
+        },
+
+        arm64: {
+            srcs: ["lib64MtkSpeechEnh.so"],
+        },
+    },
+    compile_multilib: "both",
+
+}

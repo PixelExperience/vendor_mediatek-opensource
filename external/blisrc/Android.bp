@@ -1,0 +1,67 @@
+//
+// Copyright (C) 2008 The Android Open Source Project
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//      http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+//
+
+cc_prebuilt_library_shared {
+    name: "libblisrc",
+    owner: "mtk",
+
+    arch: {
+        arm: {
+            srcs: ["blisrc16/libblisrc.so"],
+        },
+
+        arm64: {
+            srcs: ["blisrc16/lib64blisrc.so"],
+        },
+    },
+    compile_multilib: "both",
+}
+
+cc_prebuilt_library_shared {
+    name: "libblisrc_vendor",
+    proprietary: true,
+    owner: "mtk",
+
+    arch: {
+        arm: {
+            srcs: ["blisrc16/libblisrc_vendor.so"],
+        },
+
+        arm64: {
+            srcs: ["blisrc16/lib64blisrc_vendor.so"],
+        },
+    },
+    compile_multilib: "both",
+    shared_libs: ["libmtk_drvb"],
+}
+
+cc_prebuilt_library_shared {
+    name: "libblisrc32_vendor",
+    proprietary: true,
+    owner: "mtk",
+
+    arch: {
+        arm: {
+            srcs: ["blisrc32/libblisrc32_vendor.so"],
+        },
+
+        arm64: {
+            srcs: ["blisrc32/lib64blisrc32_vendor.so"],
+        },
+    },
+    compile_multilib: "both",
+    shared_libs: ["libmtk_drvb"],
+}

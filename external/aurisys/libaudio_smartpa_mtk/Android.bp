@@ -1,0 +1,59 @@
+cc_library_shared {
+    name: "libaudiosmartpamtk",
+
+    srcs: [
+        "src/smartpa_param.cpp",
+        "src/parser.cpp",
+    ],
+
+    cflags: ["-DMTK_AURISYS_FRAMEWORK_SUPPORT"],
+
+    include_dirs: [
+        "vendor/mediatek/opensource/external/nvram/libnvram",
+        "vendor/mediatek/opensource/external/aurisys/interface",
+        "vendor/mediatek/opensource/hardware/audio/common/V3/include",
+        "vendor/mediatek/opensource/hardware/audio/common/include",
+        "vendor/mediatek/opensource/hardware/audio/common/utility",
+        "external/tinyalsa/include",
+        "external/boringssl/src/include",
+    ],
+
+    shared_libs: [
+        "libcutils",
+        "libutils",
+        "liblog",
+        "libnvram",
+        "libtinyalsa",
+        "libcrypto",
+        "libssl",
+    ],
+
+    proprietary: true,
+    owner: "mtk",
+
+}
+
+cc_binary {
+    name: "smartpa_nvtest",
+
+    srcs: ["test/smartpa_nvtest.c"],
+
+    include_dirs: [
+        "vendor/mediatek/opensource/external/nvram/libnvram",
+        "vendor/mediatek/opensource/external/nvram/libfile_op",
+    ],
+
+    // LOCAL_CFLAGS += -D__DEBUG
+
+    shared_libs: [
+        "libcutils",
+        "libutils",
+        "liblog",
+        "libnvram",
+        "libfile_op",
+    ],
+
+    proprietary: true,
+    owner: "mtk",
+
+}

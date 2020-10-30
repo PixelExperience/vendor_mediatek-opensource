@@ -1,0 +1,20 @@
+//Installed to /vendor
+cc_prebuilt_library_shared {
+	name: "libmtk_drvb",
+        proprietary: true,
+	owner: "mtk",
+	target: {
+		android_arm: {
+			srcs: ["arm/libmtk_drvb.so"],
+		},
+		android_arm64: {
+			srcs: ["arm64/libmtk_drvb.so"],
+		},
+	},
+
+        shared_libs: [
+            "libcutils",
+            "libutils",
+        ],
+        compile_multilib: "both",
+}

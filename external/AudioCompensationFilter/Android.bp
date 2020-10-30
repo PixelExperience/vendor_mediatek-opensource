@@ -1,0 +1,86 @@
+//############################################################################################################## System
+cc_library_shared {
+    name: "libaudiocompensationfilter",
+
+    srcs: ["AudioCompFltCustParam.cpp"],
+
+    include_dirs: [
+        "system/core/base/include",
+        "vendor/mediatek/opensource/external/audio_utils/common_headers/cgen/cfgfileinc",
+    ] + [
+        "external/libxml2/include",
+        "external/icu/libandroidicu/include",
+        "vendor/mediatek/opensource/external/AudioParamParser/include",
+        "vendor/mediatek/opensource/external/AudioParamParser",
+    ],
+    shared_libs: [
+        "libaudioclient",
+        "libcutils",
+        "liblog",
+        "libutils",
+    ] + ["libandroidicu"],
+    cflags: ["-DSYS_IMPL"],
+
+    compile_multilib: "both",
+}
+
+//############################################################################################################## Vendor
+cc_library_shared {
+    name: "libaudiocompensationfilter_vendor",
+
+    srcs: ["AudioCompFltCustParam.cpp"],
+
+    include_dirs: [
+        "vendor/mediatek/opensource/external/nvram/libnvram",
+        "vendor/mediatek/opensource/external/audio_utils/common_headers/cgen/cfgfileinc",
+    ] + [
+        "external/libxml2/include",
+        "external/icu/libandroidicu/include",
+        "vendor/mediatek/opensource/external/AudioParamParser/include",
+        "vendor/mediatek/opensource/external/AudioParamParser",
+    ],
+    shared_libs: [
+        "libcustom_nvram",
+        "libcutils",
+        "liblog",
+        "libutils",
+    ] + ["libnvram"],
+
+    proprietary: true,
+    owner: "mtk",
+
+    compile_multilib: "both",
+}
+
+//############################# libaudiocompensationfilterc used by vendor only
+cc_library_shared {
+    name: "libaudiocompensationfilterc",
+    local_include_dirs: ["."],
+
+    srcs: ["AudioCompFltCustParamc.c"],
+
+    include_dirs: [
+        "vendor/mediatek/opensource/external/audiocustparam",
+        "vendor/mediatek/opensource/external/nvram/libnvram",
+        "vendor/mediatek/opensource/external/audio_utils/common_headers/cgen/cfgfileinc",
+    ] + [
+        "external/libxml2/include",
+        "external/icu/libandroidicu/include",
+        "vendor/mediatek/opensource/external/AudioParamParser/include",
+        "vendor/mediatek/opensource/external/AudioParamParser",
+    ],
+    shared_libs: [
+        "libcustom_nvram",
+        "libnvram",
+        "libcutils",
+        "libutils",
+        "liblog",
+        "libaudiocustparam_vendor",
+    ],
+
+    proprietary: true,
+    owner: "mtk",
+
+    compile_multilib: "both",
+    host_ldlibs: ["-llog"],
+}

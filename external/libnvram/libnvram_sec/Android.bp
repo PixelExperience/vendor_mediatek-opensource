@@ -1,0 +1,21 @@
+cc_library_shared {
+    name: "libnvram_sec",
+
+    shared_libs: [
+        "libc",
+        "libcutils",
+        "libcustom_nvram",
+        "liblog",
+    ],
+
+    srcs: ["libnvram_sec.c"],
+
+    include_dirs: [
+        "vendor/mediatek/opensource/external/nvram/libfile_op",
+        "vendor/mediatek/opensource/external/nvram/libnvram",
+    ],
+
+    proprietary: true,
+    owner: "mtk",
+
+}

@@ -1,0 +1,19 @@
+cc_library_shared {
+    name: "libnvram_daemon_callback",
+
+    shared_libs: [
+        "libc",
+        "liblog",
+        "libcustom_nvram",
+        "libnvram",
+    ],
+    srcs: ["libnvram_daemon_callback.c"],
+    include_dirs: [
+        "vendor/mediatek/opensource/external/nvram/libfile_op",
+        "vendor/mediatek/opensource/external/nvram/libnvram",
+    ],
+
+    proprietary: true,
+    owner: "mtk",
+
+}

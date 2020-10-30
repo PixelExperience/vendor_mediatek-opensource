@@ -1,0 +1,28 @@
+cc_library_shared {
+    name: "libnvram_platform",
+
+    shared_libs: [
+        "libc",
+        "libcutils",
+        "liblog",
+    ],
+    srcs: ["nvram_platform.c"],
+    include_dirs: ["vendor/mediatek/opensource/external/nvram/libnvram"],
+    proprietary: true,
+    owner: "mtk",
+
+}
+
+cc_library_shared {
+    name: "libnvram_platform_mtk",
+
+    shared_libs: [
+        "libc",
+        "libcutils",
+        "liblog",
+    ],
+    srcs: ["nvram_platform.c"],
+    include_dirs: ["vendor/mediatek/opensource/external/nvram/libnvram"],
+    owner: "mtk",
+
+}

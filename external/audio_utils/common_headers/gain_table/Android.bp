@@ -1,0 +1,7 @@
+cc_library_headers {
+
+    name: "audio_gain_table_param_includes",
+
+    export_include_dirs: ["."],
+
+}

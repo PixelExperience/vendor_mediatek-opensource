@@ -1,0 +1,112 @@
+//############################################################################################################## System
+cc_library_shared {
+    name: "libaudiocomponentengine",
+
+    srcs: [
+        "MtkAudioComponent.cpp",
+        "MtkAudioBitConverter.cpp",
+        "MtkAudioLoud.cpp",
+    ],
+
+    include_dirs: [
+        "vendor/mediatek/opensource/external/nvram/libnvram",
+        "vendor/mediatek/opensource/external/AudioCompensationFilter",
+        "vendor/mediatek/opensource/external/limiter",
+        "vendor/mediatek/opensource/external/shifter",
+        "vendor/mediatek/opensource/external/bessound_HD",
+        "vendor/mediatek/opensource/external/audio_utils/common_headers",
+        "vendor/mediatek/opensource/external/audio_utils/common_utils/AudioToolkit",
+        "vendor/mediatek/opensource/external/audio_utils/common_headers/cgen/cfgfileinc",
+    ],
+
+    shared_libs: [
+        "libaudiocompensationfilter",
+        "libcutils",
+        "liblog",
+        "libutils",
+        "libbessound_hd_mtk",
+        "libmtklimiter",
+        "libmtkshifter",
+        "libaudiotoolkit",
+    ],
+
+    cflags: ["-DSYS_IMPL"],
+
+    compile_multilib: "both",
+}
+
+//############################################################################################################## Vendor
+cc_library_shared {
+    name: "libaudiocomponentengine_vendor",
+
+    srcs: [
+        "MtkAudioComponent.cpp",
+        "MtkAudioBitConverter.cpp",
+        "MtkAudioSrc.cpp",
+        "MtkAudioDcRemoval.cpp",
+        "MtkAudioLoud.cpp",
+    ],
+
+    include_dirs: [
+        "vendor/mediatek/opensource/external/nvram/libnvram",
+        "vendor/mediatek/opensource/external/AudioCompensationFilter",
+        "vendor/mediatek/opensource/external/blisrc/blisrc32",
+        "vendor/mediatek/opensource/external/limiter",
+        "vendor/mediatek/opensource/external/shifter",
+        "vendor/mediatek/opensource/external/audiodcremoveflt",
+        "vendor/mediatek/opensource/external/bessound_HD",
+        "vendor/mediatek/opensource/external/audio_utils/common_headers/cgen/cfgfileinc",
+    ],
+
+    shared_libs: [
+        "libaudiocompensationfilter_vendor",
+        "libcutils",
+        "liblog",
+        "libutils",
+        "libblisrc32_vendor",
+        "libbessound_hd_mtk_vendor",
+        "libmtklimiter_vendor",
+        "libaudiodcrflt_vendor",
+        "libmtkshifter_vendor",
+    ],
+
+    cflags: ["-DENABLE_DC_REMOVE"] + ["-DENABLE_SRC"],
+    proprietary: true,
+    owner: "mtk",
+
+}
+
+//############################# libaudiocomponentenginec used by vendor only
+cc_library_shared {
+    name: "libaudiocomponentenginec",
+
+    local_include_dirs: ["."],
+
+    srcs: [
+        "MtkAudioSrcInC.c",
+        "MtkAudioBitConverterc.c",
+    ],
+
+    proprietary: true,
+    owner: "mtk",
+
+    include_dirs: [
+        "vendor/mediatek/opensource/external/blisrc/blisrc32",
+        "vendor/mediatek/opensource/external/limiter",
+        "vendor/mediatek/opensource/external/shifter",
+        "vendor/mediatek/opensource/external/audio_utils/common_headers/cgen/cfgfileinc",
+    ],
+
+    shared_libs: [
+        "libcutils",
+        "libutils",
+        "liblog",
+        "libblisrc32_vendor",
+        "libmtklimiter_vendor",
+        "libmtkshifter_vendor",
+    ],
+
+    host_ldlibs: ["-llog"],
+
+    compile_multilib: "both",
+}

@@ -1,0 +1,32 @@
+cc_library_shared {
+    name: "libaudioloudc",
+
+    srcs: ["MtkAudioLoudc.c"],
+
+    include_dirs: [
+        "vendor/mediatek/opensource/external/nvram/libnvram",
+        "vendor/mediatek/opensource/external/AudioCompensationFilter",
+        "vendor/mediatek/opensource/external/bessound_HD",
+        "vendor/mediatek/opensource/external/aurisys/interface",
+        "vendor/mediatek/opensource/hardware/audio/common/utility",
+        "vendor/mediatek/opensource/hal/audioflinger/audio",
+        "vendor/mediatek/opensource/external/audio_utils/common_headers/cgen/cfgfileinc",
+        "vendor/mediatek/opensource/external/audio_utils/common_headers/customization",
+    ],
+
+    shared_libs: [
+        "libaudiocompensationfilterc",
+        "libnvram",
+        "libbessound_hd_mtk_vendor",
+        "libcutils",
+        "libutils",
+        "liblog",
+    ],
+
+    cflags: ["-DMTK_BESLOUDNESS_RUN_WITH_HAL"] + ["-DMTK_ENABLE_STEREO_SPEAKER"],
+
+    proprietary: true,
+    owner: "mtk",
+
+    compile_multilib: "both",
+}

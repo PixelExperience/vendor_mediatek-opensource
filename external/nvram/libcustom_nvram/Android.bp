@@ -1,0 +1,22 @@
+cc_library_shared {
+    name: "libcustom_nvram",
+
+    cflags: ["-D__MTK_DUAL_MIC_SUPPORT__"] + ["-D__NXP_SMARTPA_SUPPORT__"] + ["-DMTK_ECCCI_C2K"] + ["-DMTK_ECCCI_C2K"] + ["-DMTK_EMMC_SUPPORT"] + ["-DMTK_UFS_SUPPORT"],
+
+    shared_libs: [
+        "libc",
+        "libcutils",
+        "liblog",
+    ],
+    srcs: ["CFG_file_info.c"],
+    include_dirs: [
+        "vendor/mediatek/opensource/external/nvram/libnvram",
+        "vendor/mediatek/opensource/external/nvram/libfile_op",
+        "vendor/mediatek/opensource/external/audio_utils/common_headers/cgen/cfgfileinc",
+        "vendor/mediatek/opensource/external/audio_utils/common_headers/cgen",
+    ],
+
+    proprietary: true,
+    owner: "mtk",
+
+}

@@ -1,0 +1,33 @@
+cc_library_shared {
+    name: "libnvram",
+
+    shared_libs: [
+        "libc",
+        "libcutils",
+        "libnvram_sec",
+        "libcustom_nvram",
+        "libnvram_platform",
+        "libbase",
+        "liblog",
+    ],
+
+    srcs: ["libnvram.cpp"],
+
+    header_libs: [
+        "libnvram_headers",
+        "libfile_op_headers",
+    ],
+
+    // pass the include path of system/core/include/private/android_filesystem_config.h
+    include_dirs: [
+        "system/core/include/private",
+        "system/core/include/private",
+        "system/core/fs_mgr/include_fstab/fstab",
+    ],
+
+    static_libs: ["libfstab"],
+
+    proprietary: true,
+    owner: "mtk",
+
+}

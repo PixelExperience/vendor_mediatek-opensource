@@ -1,0 +1,58 @@
+//## ============================================================================
+//## AudioToolkit for system
+//## ============================================================================
+
+cc_library_shared {
+    name: "libaudiotoolkit",
+
+    srcs: ["AudioToolkit.cpp"],
+
+    shared_libs: [
+        "liblog",
+        "libcutils",
+        "libutils",
+        "libaudioclient",
+    ],
+
+    include_dirs: [
+        "vendor/mediatek/opensource/external/audio_utils/common_headers/",
+        "frameworks/av/media/libaudioclient/include/media/",
+        "system/core/base/include",
+    ],
+
+    cflags: ["-DSYS_IMPL"],
+
+    proprietary: false,
+    owner: "mtk",
+    arch: {
+        arm: {
+            instruction_set: "arm",
+        },
+    },
+}
+
+//## ============================================================================
+//## AudioToolkit for vendor
+//## ============================================================================
+
+cc_library_shared {
+    name: "libaudiotoolkit_vendor",
+
+    srcs: ["AudioToolkit.cpp"],
+
+    shared_libs: [
+        "liblog",
+        "libcutils",
+        "libutils",
+    ],
+
+    include_dirs: ["vendor/mediatek/opensource/external/audio_utils/common_headers/"],
+
+    proprietary: true,
+    owner: "mtk",
+    arch: {
+        arm: {
+            instruction_set: "arm",
+        },
+    },
+}

@@ -1,0 +1,34 @@
+cc_library_shared {
+    name: "libaudiofmtconv",
+
+    cflags: [
+        "-Werror",
+        "-Wno-error=undefined-bool-conversion",
+    ] + [
+        "-Wall",
+        "-Wextra",
+    ] + ["-fexceptions"],
+
+    include_dirs: [
+        "vendor/mediatek/opensource/external/aurisys/interface",
+        "vendor/mediatek/opensource/external/blisrc/blisrc32",
+        "vendor/mediatek/opensource/external/shifter",
+    ],
+
+    shared_libs: [
+        "libcutils",
+        "libutils",
+        "liblog",
+        "libblisrc32_vendor",
+        "libmtkshifter_vendor",
+    ],
+
+    host_ldlibs: ["-llog"],
+
+    srcs: ["audio_fmt_conv.c"],
+
+    proprietary: true,
+    owner: "mtk",
+
+    compile_multilib: "both",
+}
