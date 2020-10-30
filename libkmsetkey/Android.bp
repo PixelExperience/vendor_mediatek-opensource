@@ -1,0 +1,66 @@
+// Copyright (C) 2020 The Evolution X Project
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//      http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+cc_library_shared {
+
+    name: "libkmsetkey",
+
+    proprietary: true,
+    owner: "mtk",
+
+    srcs: ["kmsetkey.cpp"],
+
+    shared_libs: [
+        "liblog",
+        "libutils",
+        "libhidlbase",
+        "libhidltransport",
+        "vendor.mediatek.hardware.keymaster_attestation@1.1",
+    ],
+
+    cflags: [
+        "-Wall",
+        "-Werror",
+        "-g",
+    ],
+    ldflags: ["-Wl,--unresolved-symbols=ignore-all"],
+
+    export_include_dirs: ["."],
+
+}
+
+cc_binary {
+
+    name: "kmsetkey_ca",
+
+    proprietary: true,
+    owner: "mtk",
+
+    srcs: ["kmsetkey_ca.cpp"],
+
+    local_include_dirs: ["1.1"],
+
+    shared_libs: [
+        "libdl",
+        "libhardware",
+    ],
+
+    cflags: [
+        "-Wall",
+        "-Werror",
+        "-g",
+    ],
+    ldflags: ["-Wl,--unresolved-symbols=ignore-all"],
+
+}
