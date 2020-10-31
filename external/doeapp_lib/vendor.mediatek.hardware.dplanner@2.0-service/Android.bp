@@ -1,0 +1,26 @@
+cc_prebuilt_binary {
+
+    name: "vendor.mediatek.hardware.dplanner@2.0-service",
+    relative_install_path: "hw",
+    proprietary: true,
+    owner: "mtk",
+    shared_libs: [
+        "libhidlbase",
+        "libutils",
+        "vendor.mediatek.hardware.dplanner@2.0",
+        "libziparchive",
+        "libcutils",
+        "liblog",
+        "libc++",
+        "libc",
+        "libm",
+        "libdl",
+    ],
+    init_rc: ["2.0/vendor.mediatek.hardware.dplanner@2.0-service.rc"],
+    compile_multilib: "64",
+    multilib: {
+        lib64: {
+            srcs: ["arm64_armv8-a_cortex-a53/vendor.mediatek.hardware.dplanner@2.0-service"],
+        },
+    },
+}
