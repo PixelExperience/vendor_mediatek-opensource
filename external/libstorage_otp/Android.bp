@@ -1,0 +1,21 @@
+// Module name
+
+cc_library_shared {
+
+    name: "libstorage_otp",
+    shared_libs: [
+        "libc",
+        "libcutils",
+        "libbase",
+        "liblog",
+    ],
+
+    srcs: ["storage_otp.c"] + ["ufs.cpp"] + ["emmc.cpp"],
+
+    include_dirs: ["system/core/include/private"] + ["system/core/fs_mgr/include_fstab/fstab"],
+
+    static_libs: ["libfstab"],
+    proprietary: true,
+    owner: "mtk",
+
+}

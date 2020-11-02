@@ -1,0 +1,35 @@
+cc_binary {
+    name: "ccci_fsd",
+    arch: {
+        arm: {
+            instruction_set: "arm",
+        },
+    },
+    srcs: [
+        "ccci_fsd.c",
+        "platform/fsd_platform.c",
+        "platform/power.c",
+    ],
+
+    include_dirs: [
+        "vendor/mediatek/opensource/ccci/include",
+        "vendor/mediatek/opensource/external/ccci_fsd/platform",
+        "vendor/mediatek/opensource/external/libstorage_otp",
+    ],
+
+    shared_libs: [
+    "liblog",
+    "libnvram",
+    "libcutils",
+    "libstorage_otp",
+    "libhardware_legacy",
+    ],
+
+    proprietary: true,
+    owner: "mtk",
+    compile_multilib: "32",
+    cflags: ["-Wno-attributes"],
+
+    init_rc: ["init.cccifsd.rc"],
+
+}

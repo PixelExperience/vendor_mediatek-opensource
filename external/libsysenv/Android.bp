@@ -1,0 +1,37 @@
+//########################################################
+
+cc_library_shared {
+    name: "libsysenv",
+
+    srcs: ["sysenv_utils.cpp"],
+
+    shared_libs: [
+        "liblog",
+        "libbase",
+    ],
+    static_libs: ["libfstab"],
+
+    include_dirs: ["system/core/fs_mgr/include_fstab/fstab"],
+
+    proprietary: true,
+    owner: "mtk",
+    compile_multilib: "both",
+}
+
+//########################################################
+cc_library_shared {
+    name: "libsysenv_system",
+
+    srcs: ["sysenv_utils.cpp"],
+
+    shared_libs: [
+        "liblog",
+        "libbase",
+    ],
+    static_libs: ["libfstab"],
+
+    include_dirs: ["system/core/fs_mgr/include_fstab/fstab"],
+
+    owner: "mtk",
+    compile_multilib: "both",
+}

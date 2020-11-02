@@ -3,3 +3,31 @@ cc_library_headers {
     export_include_dirs: ["include"],
     vendor_available: true,
 }
+
+cc_library_shared {
+    name: "libccci_util",
+
+    cflags: ["-DMD_SBP_CUSTOM_VALUE=\"$(MTK_MD_SBP_CUSTOM_VALUE)\""] + ["-DMTK_ECCCI_C2K"],
+
+    srcs: [
+        "ccci_lib.c",
+        "platform/ccci_lib_platform.c",
+    ],
+
+    shared_libs: [
+        "libc",
+        "liblog",
+    ],
+    static_libs: ["libcutils"],
+
+    include_dirs: [
+        "vendor/mediatek/opensource/ccci/include",
+        "vendor/mediatek/opensource/ccci/platform",
+    ],
+
+    export_include_dirs: ["include"],
+
+    proprietary: true,
+    owner: "mtk",
+
+}

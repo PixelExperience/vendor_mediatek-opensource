@@ -1,0 +1,43 @@
+cc_binary {
+    name: "ccci_mdinit",
+
+    srcs: [
+        "main.c",
+        "md_init_fsm.c",
+        "time_clib_srv.c",
+        "magic_pattern.c",
+        "env_setting.c",
+        "ccci_legacy.c",
+        "ccci_log.c",
+        "ccci_support_utils.c",
+        "platform/mdinit_platform.c",
+        "platform/mdinit_relate.c",
+        "platform/md_init.c",
+    ],
+
+    include_dirs: [
+        "vendor/mediatek/opensource/external/nvram/libnvram",
+        "vendor/mediatek/opensource/external/libsysenv",
+        "vendor/mediatek/opensource/ccci/include",
+        "vendor/mediatek/opensource/external/ccci_mdinit_src/platform",
+    ],
+
+    shared_libs: [
+    "libsysenv",
+    "libcutils",
+    "liblog",
+    "libc",
+    "libnvram",
+    "libccci_util",
+    "libhardware_legacy",
+    "libdl",
+    ],
+
+    cflags: ["-Werror"],
+    proprietary: true,
+    owner: "mtk",
+    compile_multilib: "32",
+
+    init_rc: ["init.cccimdinit.rc"],
+
+}
