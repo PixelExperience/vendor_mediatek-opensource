@@ -1,0 +1,41 @@
+/*
+ * Copyright (C) 2016 The Android Open Source Project
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package vendor.mediatek.hardware.mtkradioex@1.8;
+
+import @1.5::IMtkRadioExResponse;
+import android.hardware.radio@1.0::types:RadioResponseInfo;
+
+/**
+ * Interface declaring response functions to solicited radio requests.
+ */
+interface IMtkRadioExResponse extends @1.5::IMtkRadioExResponse{
+
+    /**
+     * Response of RIL request "RIL_REQUEST_SET_CALL_SUB_ADDRESS"
+     *
+     * @param responseInfo Response info struct containing response type, serial no. and error
+     */
+    oneway setCallSubAddressResponse(RadioResponseInfo info);
+
+    /**
+     * Response of RIL request "RIL_REQUEST_GET_CALL_SUB_ADDRESS"
+     *
+     * @param responseInfo Response info struct containing response type, serial no. and error
+     * @param enable the current enable/disable status.
+     */
+    oneway getCallSubAddressResponse(RadioResponseInfo info, int32_t enable);
+};
