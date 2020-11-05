@@ -1,0 +1,50 @@
+cc_library_shared {
+    name: "android.hardware.sensors@1.0-impl-mediatek",
+    proprietary: true,
+    relative_install_path: "hw",
+    owner: "mtk",
+    srcs: ["Sensors.cpp"],
+
+    shared_libs: [
+        "liblog",
+        "libcutils",
+        "libhardware",
+
+        "libbase",
+        "libutils",
+        "libhidlbase",
+
+        "android.hardware.sensors@1.0",
+    ],
+
+    static_libs: [
+        "android.hardware.sensors@1.0-convert",
+        "multihal",
+    ],
+
+}
+
+cc_binary {
+    name: "android.hardware.sensors@1.0-service-mediatek",
+    relative_install_path: "hw",
+    proprietary: true,
+    owner: "mtk",
+    init_rc: ["android.hardware.sensors@1.0-service-mediatek.rc"],
+    srcs: ["service.cpp"],
+
+    shared_libs: [
+        "liblog",
+        "libcutils",
+        "libdl",
+        "libbase",
+        "libutils",
+        "libhardware_legacy",
+        "libhardware",
+    ] + [
+        "libhwbinder",
+        "libhidlbase",
+        "libhidltransport",
+        "android.hardware.sensors@1.0",
+    ],
+
+}
