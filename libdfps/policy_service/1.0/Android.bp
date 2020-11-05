@@ -1,0 +1,173 @@
+//
+// libfpspolicy-client
+//
+cc_library_static {
+    name: "libfpspolicy-client",
+    clang: true,
+    cflags: [
+        "-Wall",
+        "-Werror",
+        "-Wunused",
+        "-Wunreachable-code",
+    ],
+    proprietary: true,
+    owner: "mtk",
+    srcs: [
+        "default/FpsPolicyClient.cpp",
+        "default/FpsInfoClient.cpp",
+        "default/FpsVsyncClient.cpp",
+    ],
+    shared_libs: [
+        "vendor.mediatek.hardware.dfps@1.0",
+        "libbase",
+        "libcutils",
+        "libfmq",
+        "libhardware",
+        "libhidlbase",
+
+        "liblog",
+        "libsync",
+        "libutils",
+    ],
+
+    include_dirs: ["vendor/mediatek/opensource/libdfps/inc"],
+}
+
+//
+// vendor.mediatek.hardware.dfps@1.0-service
+//
+cc_binary {
+    name: "vendor.mediatek.hardware.dfps@1.0-service",
+    clang: true,
+    cflags: [
+        "-Wall",
+        "-Werror",
+        "-Wunused",
+        "-Wunreachable-code",
+    ],
+    relative_install_path: "hw",
+    proprietary: true,
+    owner: "mtk",
+    srcs: ["default/service.cpp"],
+    init_rc: ["default/vendor.mediatek.hardware.dfps@1.0-service.rc"],
+    static_libs: ["libfpspolicy-client"],
+    shared_libs: [
+        "vendor.mediatek.hardware.dfps@1.0",
+        "libbase",
+        "libcutils",
+        "libfmq",
+        "libhardware",
+        "libhidlbase",
+
+        "liblog",
+        "libsync",
+        "libutils",
+    ],
+
+}
+
+//
+// vendor.mediatek.hardware.dfps@1.0-impl
+//
+cc_library_shared {
+    name: "vendor.mediatek.hardware.dfps@1.0-impl",
+    clang: true,
+    cflags: [
+        "-Wall",
+        "-Werror",
+        "-Wunused",
+        "-Wunreachable-code",
+    ],
+    relative_install_path: "hw",
+    proprietary: true,
+    owner: "mtk",
+    srcs: ["default/DfpsHal.cpp"],
+    include_dirs: ["vendor/mediatek/opensource/libdfps/inc"],
+
+    static_libs: ["libfpspolicy-client"],
+    shared_libs: [
+        "vendor.mediatek.hardware.dfps@1.0",
+        "libbase",
+        "libcutils",
+        "libfmq",
+        "libhardware",
+        "libhidlbase",
+
+        "liblog",
+        "libsync",
+        "libutils",
+    ],
+
+}
+
+//
+// dfps.mt6785
+//
+cc_library_shared {
+    name: "dfps.mt6785",
+    clang: true,
+    cflags: [
+        "-Wall",
+        "-Werror",
+        "-Wunused",
+        "-Wunreachable-code",
+    ] + ["-DLOG_TAG=\"DynamicFpsPolicy\""],
+    relative_install_path: "hw",
+    proprietary: true,
+    owner: "mtk",
+
+    srcs: [
+        "dfps.cpp",
+        "FpsPolicyService.cpp",
+        "FpsPolicyTracker.cpp",
+        "string_def.cpp",
+    ],
+
+    include_dirs: [
+        "vendor/mediatek/opensource/libdfps/inc",
+        "vendor/mediatek/opensource/libgem/inc",
+        "hardware/libhardware/include",
+    ],
+    shared_libs: [
+        "libcutils",
+        "liblog",
+        "libutils",
+    ],
+
+}
+
+//
+// libfpspolicy
+//
+cc_library_shared {
+    name: "libfpspolicy",
+    clang: true,
+    cflags: ["-DLOG_TAG=\"DynamicFpsPolicy\""] + [
+        "-Wall",
+        "-Werror",
+        "-Wunused",
+        "-Wunreachable-code",
+    ],
+    proprietary: true,
+    owner: "mtk",
+
+    srcs: [
+        "utils.cpp",
+        "FpsPolicy.cpp",
+        "FpsInfo.cpp",
+        "FpsVsync.cpp",
+        "string_def.cpp",
+    ],
+
+    shared_libs: [
+        "libutils",
+        "libcutils",
+        "liblog",
+        "libhidlbase",
+        "libhidltransport",
+        "libhwbinder",
+        "libhardware",
+    ] + ["vendor.mediatek.hardware.dfps@1.0"],
+    include_dirs: ["vendor/mediatek/opensource/libdfps/inc"],
+
+}
