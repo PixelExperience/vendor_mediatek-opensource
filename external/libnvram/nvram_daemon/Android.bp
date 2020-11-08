@@ -1,0 +1,41 @@
+cc_binary {
+    name: "nvram_daemon",
+
+    shared_libs: [
+        "libc",
+        "libcutils",
+        "libnvram",
+        "libcustom_nvram",
+        "libfile_op",
+        "libnvram_daemon_callback",
+        "liblog",
+        "libhwm",
+    ],
+
+    srcs: [
+        "nvram_daemon.c",
+        "nvram_battery.c",
+        "nvram_wifi.c",
+        "nvram_bt.c",
+        "nvram_productinfo.c",
+        "nvram_acc.c",
+        "nvram_gyro.c",
+        "nvram_ps.c",
+    ],
+
+    include_dirs: [
+        "vendor/mediatek/opensource/external/nvram/libnvram",
+        "vendor/mediatek/opensource/external/nvram/libfile_op",
+        "vendor/mediatek/opensource/external/sensor-tools",
+        "vendor/mediatek/opensource/external/sensor-tools/include",
+        "vendor/mediatek/opensource/external/audio_utils/common_headers/cgen",
+        "vendor/mediatek/opensource/external/inc",
+        "vendor/mediatek/opensource/external/inc/cfgfileinc",
+        "vendor/mediatek/opensource/external/inc/cfgdefault",
+    ],
+    proprietary: true,
+    owner: "mtk",
+    compile_multilib: "32",
+    init_rc: ["nvram_daemon.rc"],
+
+}

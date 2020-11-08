@@ -1,0 +1,19 @@
+//
+// cal_tool
+//
+
+cc_binary {
+    name: "cal_tool",
+
+    srcs: ["calibration_tool.c"],
+
+    proprietary: true,
+    owner: "mtk",
+
+    shared_libs: [
+        "libutils",
+        "libcutils",
+        "libhwm",
+    ],
+
+}

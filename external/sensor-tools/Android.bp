@@ -1,0 +1,19 @@
+cc_library_shared {
+    name: "libhwm",
+    srcs: ["libhwm.c"],
+    proprietary: true,
+    owner: "mtk",
+    shared_libs: [
+        "libnvram",
+        "liblog",
+        "libfile_op",
+    ],
+    include_dirs: [
+        "vendor/mediatek/opensource/external/sensor-tools/include",
+        "vendor/mediatek/opensource/external/audio_utils/common_headers/cgen",
+    ],
+    header_libs: [
+        "libnvram_headers",
+        "libfile_op_headers",
+    ],
+}

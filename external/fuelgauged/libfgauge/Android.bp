@@ -1,0 +1,13 @@
+cc_prebuilt_library_shared {
+    name: "libfgauge_gm30",
+    proprietary: true,
+    owner: "mtk",
+
+    arch: {
+        arm: {
+            srcs: ["kernel-4.14/libfgauge_gm30.so"],
+        },
+    },
+    compile_multilib: "32",
+
+}

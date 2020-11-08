@@ -1,0 +1,29 @@
+cc_binary {
+    name: "fuelgauged_nvram",
+
+    srcs: [
+        "fgauge_nvram.cpp",
+        "fg_log.cpp",
+    ],
+
+    include_dirs: [
+        "vendor/mediatek/opensource/external/nvram/libnvram",
+        "vendor/mediatek/opensource/external/inc",
+        "vendor/mediatek/opensource/external/inc/cfgfileinc",
+        "vendor/mediatek/opensource/external/inc/cfgdefault",
+        "vendor/mediatek/opensource/external/inc/cfgdefault/inc",
+    ],
+
+    shared_libs: [
+        "libcutils",
+        "libutils",
+        "libdl",
+        "libnvram",
+        "liblog",
+    ],
+
+    proprietary: true,
+    owner: "mtk",
+    compile_multilib: "32",
+    init_rc: ["fuelgauged_nvram_init.rc"],
+}

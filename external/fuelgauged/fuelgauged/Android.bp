@@ -1,0 +1,22 @@
+cc_binary {
+    name: "fuelgauged",
+
+    srcs: [
+        "fgauge_main.cpp",
+        "fg_log.cpp",
+    ],
+
+    cflags: ["-DMTK_GM_30"],
+
+    shared_libs: [
+        "libcutils",
+        "libutils",
+        "libdl",
+        "liblog",
+    ],
+
+    proprietary: true,
+    owner: "mtk",
+    compile_multilib: "32",
+    init_rc: ["fuelgauged_init.rc"],
+}
