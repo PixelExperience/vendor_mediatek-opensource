@@ -1,0 +1,31 @@
+// --------------------------------------------------------------------
+// configuration files for AOSP wpa_supplicant_8
+// --------------------------------------------------------------------
+
+prebuilt_etc {
+    name: "wpa_supplicant.conf",
+    owner: "mtk",
+
+    src: "mtk-wpa_supplicant.conf",
+    sub_dir: "wifi",
+    proprietary: true,
+}
+
+//################Add overlay file################
+prebuilt_etc {
+    name: "wpa_supplicant_overlay.conf",
+    owner: "mtk",
+
+    src: "mtk-wpa_supplicant-overlay.conf",
+    sub_dir: "wifi",
+    proprietary: true,
+}
+
+prebuilt_etc {
+    name: "p2p_supplicant_overlay.conf",
+    owner: "mtk",
+
+    src: "mtk-p2p_wpa_supplicant-overlay.conf",
+    sub_dir: "wifi",
+    proprietary: true,
+}
