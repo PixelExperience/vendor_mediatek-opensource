@@ -918,6 +918,54 @@ int gsensor_set_static_calibration(struct caliData *caliDat)
 
 }
 /*---------------------------------------------------------------------------*/
+int sar_start_static_calibration(void)
+{
+    int fd = 0;
+    int err, flags = 1;
+
+    fd = open(SAR_NAME, O_RDONLY);
+    if (fd < 0) {
+        HWMLOGE("Couldn't find or open file sensor (%s)", strerror(errno));
+        return -errno;
+    }
+
+    if (0 != (err = ioctl(fd, SAR_IOCTL_ENABLE_CALI, &flags))) {
+        HWMLOGE("enable cali err: %d\n", err);
+        close(fd);
+        return err;
+    }
+
+    close(fd);
+    return 0;
+}
+/*---------------------------------------------------------------------------*/
+int sar_get_static_calibration(struct caliData *caliDat)
+{
+    int err;
+    struct SENSOR_DATA cali;
+    int fd = 0;
+
+    fd = open(SAR_NAME, O_RDONLY);
+    if (fd < 0) {
+        HWMLOGE("invalid file handle: %d\n", fd);
+        return -EINVAL;
+    }
+    if (0 != (err = ioctl(fd, SAR_IOCTL_GET_CALI, &cali))) {
+        HWMLOGE("get_cali err: %d\n", err);
+        close(fd);
+        return err;
+    }
+
+    caliDat->data[0] = (float)(cali.x) / 1000;
+    caliDat->data[1] = (float)(cali.y) / 1000;
+    caliDat->data[2] = (float)(cali.z) / 1000;
+    HWMLOGD("[RD] %9.4f %9.4f %9.4f => %5d %5d %5d\n", caliDat->data[0], caliDat->data[1], caliDat->data[2], cali.x,cali.y, cali.z);
+
+    close(fd);
+    return 0;
+
+}
+/*---------------------------------------------------------------------------*/
 /* Als cali */
 int als_start_static_calibration(void)
 {
@@ -1658,6 +1706,29 @@ int alsps_set_cali(int fd, HwmData *dat)
 }
 
 int als_set_cali(int fd, struct caliData *caliDat)
+{
+	int err;
+	float cali;
+
+	cali = caliDat->data[0] * 1000;
+
+	if(fd < 0)
+	{
+		HWMLOGE("invalid file handle: %d\n", fd);
+		return -EINVAL;
+	}
+	else if(0 != (err = ioctl(fd, ALSPS_ALS_SET_CALI, &cali)))
+	{
+		HWMLOGE("set_cali err: %d\n", err);
+		return err;
+	}
+	else
+	{
+		return 0;
+	}
+}
+
+int als_set_backlight_bias(int fd, struct caliData *caliDat)
 {
 	int err;
 	float cali;
@@ -2425,6 +2496,112 @@ int set_psensor_threshold(int high,int low)
 	if(err < 0)
 	{
 		HWMLOGE("alsps_write_nvram fail in set_psensor_threshold");
+		alsps_close(ps_fd);
+		return 0;
+	}
+
+	if(ps_fd <= 0)
+	{
+		HWMLOGE("invalid file handle!\n");
+		alsps_close(ps_fd);
+		return 0;
+	}
+	else if(0 != (err = ioctl(ps_fd, ALSPS_SET_PS_THRESHOLD, &threshold)))
+	{
+		HWMLOGE("set err: %d %d (%s)\n", ps_fd, err, strerror(errno));    
+		alsps_close(ps_fd);
+		return err;
+	}
+
+	err = alsps_close(ps_fd);
+	if(err < 0)
+	{
+		HWMLOGE("close als_ps fail (%s)", strerror(errno));
+		return 0;
+	}
+	
+	return 1;
+}
+
+int XM_get_psensor_threshold(int flag)
+{
+	int err;
+	int ps = 0;
+	int ps_fd = -1;
+
+	ps_fd = alsps_open(ps_fd);
+	if(ps_fd < 0)
+	{
+		HWMLOGE("open als_ps fail (%s)", strerror(errno));
+		return -1;
+	}
+
+	switch (flag) {
+	case ITEM_HIGH:
+		if(ps_fd <= 0)
+		{
+			HWMLOGE("invalid file handle!\n");
+			break;
+		}
+		else if(0 != (err = ioctl(ps_fd, ALSPS_GET_PS_THRESHOLD_HIGH, &ps)))
+		{
+			HWMLOGE("read err: %d %d (%s)\n", ps_fd, err, strerror(errno));    
+			break;
+		}
+		HWMLOGD("get threshold_high: %d\n", ps);  
+		break;
+
+	case ITEM_LOW:
+		if(ps_fd <= 0)
+		{
+			HWMLOGE("invalid file handle!\n");
+			break;
+		}
+		else if(0 != (err = ioctl(ps_fd, ALSPS_GET_PS_THRESHOLD_LOW, &ps)))
+		{
+			HWMLOGE("read err: %d %d (%s)\n", ps_fd, err, strerror(errno));    
+			break;
+		}
+		HWMLOGD("get threshold_high: %d\n", ps);  
+		break;
+	}	
+
+	err = alsps_close(ps_fd);
+	if(ps_fd < 0)
+	{
+		HWMLOGE("close als_ps fail (%s)", strerror(errno));
+		return 0;
+	}
+	
+	return ps;
+}
+int XM_set_psensor_threshold(int high,int low)
+{
+	int threshold[2];
+	HwmData dat;
+	int err = 0;
+	int ps_fd = -1;
+	
+	ps_fd = alsps_open(ps_fd);
+
+	threshold[0] = high;
+	threshold[1] = low;
+	
+	err = alsps_read_nvram(&dat);
+	if(err < 0)
+	{
+		HWMLOGE("alsps_read_nvram fail in XM_set_psensor_threshold");
+		alsps_close(ps_fd);
+		return 0;
+	}
+
+	dat.ps_threshold_high = threshold[0];
+	dat.ps_threshold_low = threshold[1];
+
+	err = alsps_write_nvram(&dat);
+	if(err < 0)
+	{
+		HWMLOGE("alsps_write_nvram fail in XM_set_psensor_threshold");
 		alsps_close(ps_fd);
 		return 0;
 	}

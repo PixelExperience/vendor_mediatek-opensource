@@ -25,6 +25,8 @@ extern "C" {
 #define GSENSOR_NAME                    "/dev/gsensor"
 #define GSENSOR_ATTR_SELFTEST           "/sys/bus/platform/drivers/gsensor/selftest"
 
+#define SAR_NAME                    "/dev/sar"
+
 #define GYROSCOPE_NAME                  "/dev/gyroscope"
 #define ALSPS_NAME                      "/dev/als_ps"
 
@@ -134,6 +136,10 @@ extern int msensor_do_selftest(int fd);
 extern int msensor_close(int fd);
 extern int msensor_open(int *fd);
 
+/*yucong add for sar calibration functions*/
+extern int sar_start_static_calibration(void);
+extern int sar_get_static_calibration(struct caliData *caliDat);
+
 /*yucong add for alsps calibration functions*/
 extern int alsps_calibration(int fd, int period, int count, HwmData *cali);
 extern int alsps_write_nvram(HwmData *dat);
@@ -148,6 +154,7 @@ extern int als_start_static_calibration(void);
 extern int als_get_static_calibration(struct caliData *caliDat);
 extern int als_set_static_calibration(struct caliData *caliDat);
 extern int als_set_cali(int fd, struct caliData *caliDat);
+extern int als_set_backlight_bias(int fd, struct caliData *caliDat);
 
 /*---------------------------------------------------------------------------*/
 /*---------------------------------------------------------------------------*/
@@ -159,6 +166,8 @@ extern int get_psensor_max_value(void);
 extern int do_calibration(int min, int max);
 extern int get_psensor_threshold(int flag);
 extern int set_psensor_threshold(int high, int low);
+extern int XM_get_psensor_threshold(int flag);
+extern int XM_set_psensor_threshold(int high, int low);
 extern int clear_psensor_calibration(void);
 /*---------------------------------------------------------------------------*/
 extern int do_gsensor_calibration(int tolerance);
