@@ -114,6 +114,7 @@ extern int gsensor_close(int fd);
 extern int gsensor_open(int *fd);
 extern int gsensor_start_static_calibration(void);
 extern int gsensor_get_static_calibration(struct caliData *caliDat);
+extern int gsensor_set_static_calibration(struct caliData *caliDat);
 extern int gyroscope_calibration(int fd, int period, int count, int tolerance, HwmData *cali);
 extern int gyroscope_write_nvram(HwmData *dat);
 extern int gyroscope_read_nvram(HwmData *dat);
@@ -128,6 +129,7 @@ extern int gyroscope_open(int *fd);
 extern int gyroscope_init(int fd);
 extern int gyroscope_start_static_calibration(void);
 extern int gyroscope_get_static_calibration(struct caliData *caliDat);
+extern int gyroscope_set_static_calibration(struct caliData *caliDat);
 extern int msensor_do_selftest(int fd);
 extern int msensor_close(int fd);
 extern int msensor_open(int *fd);
@@ -144,6 +146,7 @@ extern int alsps_read(int fd, HwmData *dat);
 extern int alsps_set_threshold(int fd, HwmData *dat);
 extern int als_start_static_calibration(void);
 extern int als_get_static_calibration(struct caliData *caliDat);
+extern int als_set_static_calibration(struct caliData *caliDat);
 extern int als_set_cali(int fd, struct caliData *caliDat);
 
 /*---------------------------------------------------------------------------*/

@@ -891,6 +891,33 @@ int gsensor_get_static_calibration(struct caliData *caliDat)
 
 }
 /*---------------------------------------------------------------------------*/
+int gsensor_set_static_calibration(struct caliData *caliDat)
+{
+    int err;
+    struct SENSOR_DATA cali;
+    int fd = 0;
+
+    fd = open(GSENSOR_NAME, O_RDONLY);
+    if (fd < 0) {
+        HWMLOGE("invalid file handle: %d\n", fd);
+        return -EINVAL;
+    }
+    if (0 != (err = ioctl(fd, GSENSOR_IOCTL_SET_CALI, &cali))) {
+        HWMLOGE("set_cali err: %d\n", err);
+        close(fd);
+        return err;
+    }
+
+    caliDat->data[0] = (float)(cali.x) / 1000;
+    caliDat->data[1] = (float)(cali.y) / 1000;
+    caliDat->data[2] = (float)(cali.z) / 1000;
+    HWMLOGD("[RD] %9.4f %9.4f %9.4f => %5d %5d %5d\n", caliDat->data[0], caliDat->data[1], caliDat->data[2], cali.x,cali.y, cali.z);
+
+    close(fd);
+    return 0;
+
+}
+/*---------------------------------------------------------------------------*/
 /* Als cali */
 int als_start_static_calibration(void)
 {
@@ -926,6 +953,30 @@ int als_get_static_calibration(struct caliData *caliDat)
     }
     if (0 != (err = ioctl(fd, ALSPS_IOCTL_ALS_GET_CALI, &cali))) {
         HWMLOGE("get_cali err: %d\n", err);
+        close(fd);
+        return err;
+    }
+
+    caliDat->data[0] = (float)(cali.x) / 1000;
+    HWMLOGD("[RD] %9.4f  =>  %5d \n", caliDat->data[0], cali.x);
+
+    close(fd);
+    return 0;
+
+}
+int als_set_static_calibration(struct caliData *caliDat)
+{
+    int err;
+    struct SENSOR_DATA cali;
+    int fd = 0;
+
+    fd = open(ALSPS_NAME, O_RDONLY);
+    if (fd < 0) {
+        HWMLOGE("invalid file handle: %d\n", fd);
+        return -EINVAL;
+    }
+    if (0 != (err = ioctl(fd, ALSPS_ALS_SET_CALI, &cali))) {
+        HWMLOGE("set_cali err: %d\n", err);
         close(fd);
         return err;
     }
@@ -1398,6 +1449,34 @@ int gyroscope_get_static_calibration(struct caliData *caliDat)
     }
     if (0 != (err = ioctl(fd, GYROSCOPE_IOCTL_GET_CALI, &cali))) {
         HWMLOGE("get_cali err: %d\n", err);
+        close(fd);
+        return err;
+    }
+
+    caliDat->data[0] = (float)(cali.x) / 1000;
+    caliDat->data[1] = (float)(cali.y) / 1000;
+    caliDat->data[2] = (float)(cali.z) / 1000;
+    HWMLOGD("[RD] %9.4f %9.4f %9.4f => %5d %5d %5d\n", caliDat->data[0], caliDat->data[1], caliDat->data[2], cali.x,cali.y, cali.z);
+
+    close(fd);
+    return 0;
+
+}
+/*---------------------------------------------------------------------------*/
+int gyroscope_set_static_calibration(struct caliData *caliDat)
+{
+    int err;
+    struct SENSOR_DATA cali;
+    int fd = 0;
+
+    fd = open(GYROSCOPE_NAME, O_RDONLY);
+
+    if (fd < 0) {
+        HWMLOGE("invalid file handle: %d\n", fd);
+        return -EINVAL;
+    }
+    if (0 != (err = ioctl(fd, GYROSCOPE_IOCTL_SET_CALI, &cali))) {
+        HWMLOGE("set_cali err: %d\n", err);
         close(fd);
         return err;
     }
