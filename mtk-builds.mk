@@ -20,7 +20,7 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     fstb.cfg \
     libpowerhal \
-    power.mt6785 \
+    power.$(TARGET_BOARD_PLATFORM) \
     power.default \
     powerscntbl.xml \
     libmtkperf_client \
