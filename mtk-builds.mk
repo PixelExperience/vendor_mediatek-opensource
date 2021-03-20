@@ -20,7 +20,6 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     fstb.cfg \
     libpowerhal \
-    power.mt6785 \
     power.default \
     powerscntbl.xml \
     libmtkperf_client \
@@ -31,6 +30,7 @@ PRODUCT_PACKAGES += \
     power_legacy_test_v_1_0 \
     power_native_test_v_1_0 \
     libmtkperf_client_vendor \
+    power.$(TARGET_BOARD_PLATFORM) \
     libaudioprimarydevicehalifclient \
     vendor.mediatek.hardware.power@2.1-impl \
     android.hardware.audio@5.0-impl-mediatek \
